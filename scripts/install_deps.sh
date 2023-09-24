@@ -12,6 +12,9 @@ PLATFORM="x86_64-linux"
 # Define the installation directory
 INSTALL_DIR="/usr/local/texlive/$TEXLIVE_VERSION"
 
+# Define the desired TexLive scheme (e.g., "small" for a smaller scheme)
+TEXLIVE_SCHEME="small"
+
 # Step 1: Change to the working directory (e.g., /tmp)
 cd /tmp
 
@@ -24,11 +27,33 @@ tar -xf install-tl-unx.tar.gz
 # Step 4: Change to the TexLive installation directory
 cd install-tl-*
 
-# Step 5: Install TexLive with no interaction
-perl ./install-tl --no-interaction --scheme=small
+# Step 5: Install TexLive with specific options
+sudo perl ./install-tl --profile=/dev/stdin <<END
+selected_scheme scheme-$TEXLIVE_SCHEME
+TEXDIR $INSTALL_DIR
+TEXMFLOCAL $INSTALL_DIR/texmf-local
+TEXMFSYSVAR $INSTALL_DIR/texmf-var
+TEXMFSYSCONFIG $INSTALL_DIR/texmf-config
+TEXMFHOME ~/texmf
+TEXMFVAR ~/.texlive$TEXLIVE_VERSION/texmf-var
+TEXMFCONFIG ~/.texlive$TEXLIVE_VERSION/texmf-config
+TEXMF_CACHE ~/.texlive$TEXLIVE_VERSION/texmf-var
+TMPDIR /tmp
+TEXGLOB $INSTALL_DIR/texmf-dist
+TEXLIVE_INSTALL_PREFIX $INSTALL_DIR
+option_doc 0
+option_src 0
+option_doc 0
+option_src 0
+option_autobackup 0
+option_desktop_integration 0
+option_menu_integration 0
+option_file_assocs 0
+option_post_code 1
+END
 
 # Step 6: Add TexLive binaries to the PATH
-echo "export PATH=$INSTALL_DIR/bin/$PLATFORM:\$PATH" | tee -a /etc/profile.d/texlive.sh
+echo "export PATH=$INSTALL_DIR/bin/$PLATFORM:\$PATH" | sudo tee -a /etc/profile.d/texlive.sh
 source /etc/profile.d/texlive.sh
 
 # Step 7: Clean up temporary files (optional)
