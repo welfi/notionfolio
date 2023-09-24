@@ -16,5 +16,5 @@ TLMPGR_PATH="$TEXLIVE_PATH/tex"
 
 # Use tlmgr with the full path
 echo "Using tlmgr from its installation path:"
-echo "Contents of TeX Live installation directory ($TEXLIVE_PATH):"
-ls -l "$TEXLIVE_PATH"
+echo "Contents of TeX Live installation directory ($TLMPGR_PATH):"
+ls -l "$TLMPGR_PATH"
