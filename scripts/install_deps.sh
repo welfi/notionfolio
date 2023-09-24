@@ -1,6 +1,7 @@
 #!/bin/bash
 yum update -y
 yum install wget
+yum install perl-Digest-MD5 -y
 
 # Define the version of TexLive you want to install (change YYYY to the desired year)
 TEXLIVE_VERSION="2023"
