@@ -14,9 +14,9 @@ echo "tex --version"
 
 # Use tlmgr with the full path
 echo "Using tlmgr from its installation path:"
-TLMPGR_PATH="/usr/share/texlive/tlmgr"
+TLMPGR_PATH="$TEXLIVE_PATH/tlmgr"
 
 # Use tlmgr with the full path
 echo "Using tlmgr from its installation path:"
-ls -l "$TLMPGR_PATH"
+ls -l "$TEXLIVE_PATH"
 $TLMPGR_PATH --version
