@@ -3,6 +3,7 @@
 # Update the package manager and install TeX Live
 yum update -y
 yum install texlive texlive-latex -y
+yum install texlive-collection-basic -y
 
 TEXLIVE_PATH=$(dirname $(which pdflatex))
 
