@@ -1,6 +1,6 @@
 #!/bin/bash
-yum install file
 yum update -y
+yum install file
 # Define the directory where TeX Live will be installed
 TEXLIVE_INSTALL_DIR="/usr/local/texlive"
 
@@ -10,11 +10,9 @@ INSTALL_PROFILE="scheme-medium"
 # Download the TeX Live installer script
 curl -sO https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
 
-# Verify the file type (should be gzip)
-file_type=$(file install-tl-unx.tar.gz)
-
-if [[ $file_type == *"gzip compressed data"* ]]; then
-    # Extract the installer if it's in gzip format
+# Check if the file is in gzip format by verifying its magic number
+if [[ "$(dd if=install-tl-unx.tar.gz bs=2 count=1 2>/dev/null)" == $'\x1f\x8b' ]]; then
+    # The file appears to be in gzip format, so proceed with extraction
     tar -xzf install-tl-unx.tar.gz
     cd install-tl-*
 
@@ -43,14 +41,3 @@ fi
 cd ..
 rm -rf install-tl-*
 rm install-tl-unx.tar.gz
-
-# Print TeX Live version
-pdflatex --version
-
-# Check the version of tlmgr
-tlmgr --version
-
-# Optionally, install additional TeX Live packages as needed
-# tlmgr install <package-name>
-
-echo "TeX Live installation complete."
