@@ -1,43 +1,38 @@
 #!/bin/bash
 yum update -y
-yum install file
-# Define the directory where TeX Live will be installed
-TEXLIVE_INSTALL_DIR="/usr/local/texlive"
+yum install wget
 
-# Define the profile to use for installation (scheme-basic, scheme-medium, etc.)
-INSTALL_PROFILE="scheme-medium"
+# Define the version of TexLive you want to install (change YYYY to the desired year)
+TEXLIVE_VERSION="2023"
 
-# Download the TeX Live installer script
-curl -sO https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+# Define the architecture (PLATFORM) you want to install (e.g., x86_64-linux)
+PLATFORM="x86_64-linux"
 
-# Check if the file is in gzip format by verifying its magic number
-if [[ "$(dd if=install-tl-unx.tar.gz bs=2 count=1 2>/dev/null)" == $'\x1f\x8b' ]]; then
-    # The file appears to be in gzip format, so proceed with extraction
-    tar -xzf install-tl-unx.tar.gz
-    cd install-tl-*
+# Define the installation directory
+INSTALL_DIR="/usr/local/texlive/$TEXLIVE_VERSION"
 
-    # Run the TeX Live installer with the specified profile and installation directory
-    ./install-tl -profile=/dev/stdin <<EOF
-selected_scheme $INSTALL_PROFILE
-TEXDIR $TEXLIVE_INSTALL_DIR
-EOF
+# Step 1: Change to the working directory (e.g., /tmp)
+cd /tmp
 
-    # Add TeX Live binaries to the system's PATH
-    echo "export PATH=\"$TEXLIVE_INSTALL_DIR/bin/x86_64-linux:\$PATH\"" >> ~/.bashrc
-    source ~/.bashrc  # Refresh the shell environment
+# Step 2: Download TexLive installation files using wget (or curl)
+wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
 
-    # Print TeX Live version
-    pdflatex --version
+# Step 3: Extract the downloaded files
+tar -xf install-tl-unx.tar.gz
 
-    # Check the version of tlmgr
-    tlmgr --version
+# Step 4: Change to the TexLive installation directory
+cd install-tl-*
 
-    echo "TeX Live installation complete."
-else
-    echo "Error: The downloaded file is not in gzip format."
-fi
+# Step 5: Install TexLive with no interaction
+sudo perl ./install-tl --no-interaction
 
-# Clean up temporary files
-cd ..
-rm -rf install-tl-*
-rm install-tl-unx.tar.gz
+# Step 6: Add TexLive binaries to the PATH
+echo "export PATH=$INSTALL_DIR/bin/$PLATFORM:\$PATH" | sudo tee -a /etc/profile.d/texlive.sh
+source /etc/profile.d/texlive.sh
+
+# Step 7: Clean up temporary files (optional)
+cd /tmp
+rm -rf install-tl-unx.tar.gz install-tl-*
+
+# Step 8: Verify TexLive installation
+tlmgr --version
