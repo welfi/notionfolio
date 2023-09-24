@@ -9,6 +9,7 @@ echo "pdflatex --version"
 pdflatex --version
 echo "tex --version"
 tex --version
-
+echo "which tlmgr"
+which tlmgr
 # Optionally, install additional TeX Live packages as needed
 # sudo yum install texlive-<package-name> -y
