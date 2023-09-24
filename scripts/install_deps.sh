@@ -25,7 +25,7 @@ tar -xf install-tl-unx.tar.gz
 cd install-tl-*
 
 # Step 5: Install TexLive with no interaction
-perl ./install-tl --no-interaction
+perl ./install-tl --no-interaction --scheme=small
 
 # Step 6: Add TexLive binaries to the PATH
 echo "export PATH=$INSTALL_DIR/bin/$PLATFORM:\$PATH" | tee -a /etc/profile.d/texlive.sh
