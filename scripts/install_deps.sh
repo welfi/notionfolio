@@ -4,7 +4,6 @@
 yum update -y
 yum install texlive texlive-latex -y
 
-# Determine the TeX Live installation path
 TEXLIVE_PATH=$(dirname $(which pdflatex))
 
 # Print TeX Live version
@@ -12,9 +11,9 @@ echo "pdflatex --version"
 pdflatex --version
 echo "tex --version"
 
-# Export the TeX Live path to the PATH environment variable
-export PATH="$TEXLIVE_PATH:$PATH"
-echo "tlmgr path"
-tlmgr --version
-# Optionally, install additional TeX Live packages as needed
-# sudo yum install texlive-<package-name> -y
+# Define the full path to tlmgr
+TLMPGR_PATH="$TEXLIVE_PATH/tlmgr"
+
+# Use tlmgr with the full path
+echo "Using tlmgr from its installation path:"
+$TLMPGR_PATH --version
