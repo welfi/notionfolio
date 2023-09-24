@@ -28,7 +28,7 @@ tar -xf install-tl-unx.tar.gz
 cd install-tl-*
 
 # Step 5: Install TexLive with specific options
-sudo perl ./install-tl --profile=/dev/stdin <<END
+perl ./install-tl --profile=/dev/stdin <<END
 selected_scheme scheme-$TEXLIVE_SCHEME
 TEXDIR $INSTALL_DIR
 TEXMFLOCAL $INSTALL_DIR/texmf-local
@@ -53,7 +53,7 @@ option_post_code 1
 END
 
 # Step 6: Add TexLive binaries to the PATH
-echo "export PATH=$INSTALL_DIR/bin/$PLATFORM:\$PATH" | sudo tee -a /etc/profile.d/texlive.sh
+echo "export PATH=$INSTALL_DIR/bin/$PLATFORM:\$PATH" | tee -a /etc/profile.d/texlive.sh
 source /etc/profile.d/texlive.sh
 
 # Step 7: Clean up temporary files (optional)
