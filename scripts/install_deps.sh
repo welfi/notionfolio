@@ -12,10 +12,9 @@ pdflatex --version
 echo "tex --version"
 
 # Define the full path to tlmgr
-TLMPGR_PATH="$TEXLIVE_PATH/tlmgr"
+TLMPGR_PATH="$TEXLIVE_PATH/tex"
 
 # Use tlmgr with the full path
 echo "Using tlmgr from its installation path:"
 echo "Contents of TeX Live installation directory ($TEXLIVE_PATH):"
-TEX_PATH="usr/bin/tex"
-ls -l "$TEX_PATH"
+ls -l "$TEXLIVE_PATH"
