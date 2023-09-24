@@ -1,5 +1,6 @@
 #!/bin/bash
-
+yum install file
+yum update -y
 # Define the directory where TeX Live will be installed
 TEXLIVE_INSTALL_DIR="/usr/local/texlive"
 
