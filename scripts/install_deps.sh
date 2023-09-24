@@ -7,6 +7,8 @@ yum install texlive texlive-latex -y
 # Print TeX Live version
 echo "pdflatex --version"
 pdflatex --version
+echo "tlmgr --version"
+tlmgr --version
 
 # Optionally, install additional TeX Live packages as needed
 # sudo yum install texlive-<package-name> -y
